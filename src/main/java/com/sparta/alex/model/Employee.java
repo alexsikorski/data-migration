@@ -5,7 +5,7 @@ public class Employee {
 
     private String prefix;
     private String firstName;
-    private String middleName;
+    private char middleIntial;
     private String lastName;
     private char gender;
     private String email;
@@ -13,10 +13,10 @@ public class Employee {
     private String joinDate;
     private int salary;
 
-    public Employee(String prefix, String firstName, String middleName, String lastName, char gender, String email, String birthDate, String joinDate, int salary) {
+    public Employee(String prefix, String firstName, char middleIntial, String lastName, char gender, String email, String birthDate, String joinDate, int salary) {
         this.prefix = prefix;
         this.firstName = firstName;
-        this.middleName = middleName;
+        this.middleIntial = middleIntial;
         this.lastName = lastName;
         this.gender = gender;
         this.email = email;
