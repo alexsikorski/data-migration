@@ -12,16 +12,17 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
-public class EmployeeDTO implements DTO {
+public class EmployeeDAO implements DAO {
 
     private static final String FILE_PATH = "resources/employees.csv";
     private static final Properties PROPERTIES = new Properties();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    public HashMap<Integer, Employee> employees = new HashMap<>();
-    public HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
     String insertEntry = "INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    public final HashMap<Integer, Employee> employees = new HashMap<>();
+    public final HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
     private Connection connection;
 
     @Override
@@ -87,8 +88,8 @@ public class EmployeeDTO implements DTO {
     }
 
     @Override
-    public void insertEntry(Integer employeeId, Employee employee) {
-        try (PreparedStatement preparedStatement = connectToDatabase().prepareStatement(insertEntry)) {
+    public void insertEntry(Integer employeeId, Employee employee, PreparedStatement preparedStatement) {
+        try {
             preparedStatement.setInt(1, employeeId);
             preparedStatement.setString(2, employee.getPrefix());
             preparedStatement.setString(3, employee.getFirstName());
@@ -102,6 +103,14 @@ public class EmployeeDTO implements DTO {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void insertEntires(HashMap<Integer, Employee> employeeHashMap) throws SQLException {
+        PreparedStatement preparedStatement = connectToDatabase().prepareStatement(insertEntry);
+        for (Map.Entry<Integer, Employee> entry : employees.entrySet()) {
+            insertEntry(entry.getKey(), entry.getValue(), preparedStatement);
         }
     }
 }

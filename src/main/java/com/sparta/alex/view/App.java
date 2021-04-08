@@ -1,17 +1,18 @@
 package com.sparta.alex.view;
 
-import com.sparta.alex.controller.EmployeeDTO;
+import com.sparta.alex.controller.EmployeeDAO;
 import com.sparta.alex.model.Employee;
 
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.Map;
 
-public class App
-{
-    public static void main( String[] args )
-    {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
+public class App {
+    public static void main(String[] args) {
+        EmployeeDAO employeeDTO = new EmployeeDAO();
         employeeDTO.encapsulateData();
         employeeDTO.createTable();
+
 
 //        for(Map.Entry<Integer, Employee> entry : employeeDTO.employees.entrySet()){
 //            System.out.println(entry.getKey() + " " +
@@ -26,9 +27,11 @@ public class App
 //                    entry.getValue().getSalary()
 //            );
 //        }
-
-        for(Map.Entry<Integer, Employee> entry : employeeDTO.employees.entrySet()){
-            employeeDTO.insertEntry(entry.getKey(), entry.getValue());
+        try {
+            employeeDTO.insertEntires(employeeDTO.employees);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+
     }
 }

@@ -1,6 +1,5 @@
 package com.sparta.alex.model;
 
-
 import java.util.Date;
 
 public class Employee {
