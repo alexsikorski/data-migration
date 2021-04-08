@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -16,14 +18,17 @@ public class EmployeeDTO implements DTO {
 
     private static final String FILE_PATH = "resources/employees.csv";
     private static final Properties PROPERTIES = new Properties();
-    static HashMap<Integer, Employee> employees = new HashMap<>();
-    static HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    public HashMap<Integer, Employee> employees = new HashMap<>();
+    public HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
+    String insertEntry = "INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private Connection connection;
 
     @Override
     public void encapsulateData() {
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
+
             boolean firstLine = true;
 
             while ((line = br.readLine()) != null) {
@@ -33,14 +38,14 @@ public class EmployeeDTO implements DTO {
                     // obtained lines, now to encapsulate data and populate hashmap
                     if (employees.containsKey(Integer.parseInt(values[0]))) {
                         // if employee already exists, add to toBeReviewedEmployees
-                        toBeReviewedEmployees.put(Integer.parseInt(values[0]), new Employee(values[1], values[2], values[3].charAt(0), values[4], values[5].charAt(0), values[6], values[7], values[8], Integer.parseInt(values[9])));
+                        toBeReviewedEmployees.put(Integer.parseInt(values[0]), new Employee(values[1], values[2], values[3].charAt(0), values[4], values[5].charAt(0), values[6], dateFormat.parse(values[7]), dateFormat.parse(values[8]), Integer.parseInt(values[9])));
                     } else {
-                        employees.put(Integer.parseInt(values[0]), new Employee(values[1], values[2], values[3].charAt(0), values[4], values[5].charAt(0), values[6], values[7], values[8], Integer.parseInt(values[9])));
+                        employees.put(Integer.parseInt(values[0]), new Employee(values[1], values[2], values[3].charAt(0), values[4], values[5].charAt(0), values[6], dateFormat.parse(values[7]), dateFormat.parse(values[8]), Integer.parseInt(values[9])));
                     }
                 }
                 firstLine = false;
             }
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
@@ -63,9 +68,9 @@ public class EmployeeDTO implements DTO {
                 + "employee_id INT NOT NULL,"
                 + "prefix VARCHAR(5),"
                 + "first_name VARCHAR(45),"
-                + "middle_initial VARCHAR(1),"
+                + "middle_initial CHAR(1),"
                 + "last_name VARCHAR(45),"
-                + "gender VARCHAR(1),"
+                + "gender CHAR(1),"
                 + "email VARCHAR(45),"
                 + "date_of_birth DATE,"
                 + "date_of_joining DATE,"
@@ -82,7 +87,21 @@ public class EmployeeDTO implements DTO {
     }
 
     @Override
-    public void insertEntries() {
-
+    public void insertEntry(Integer employeeId, Employee employee) {
+        try (PreparedStatement preparedStatement = connectToDatabase().prepareStatement(insertEntry)) {
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setString(2, employee.getPrefix());
+            preparedStatement.setString(3, employee.getFirstName());
+            preparedStatement.setString(4, Character.toString(employee.getMiddleIntial()));
+            preparedStatement.setString(5, employee.getLastName());
+            preparedStatement.setString(6, Character.toString(employee.getGender()));
+            preparedStatement.setString(7, employee.getEmail());
+            preparedStatement.setDate(8, new java.sql.Date(employee.getBirthDate().getTime()));
+            preparedStatement.setDate(9, new java.sql.Date(employee.getJoinDate().getTime()));
+            preparedStatement.setInt(10, employee.getSalary());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
