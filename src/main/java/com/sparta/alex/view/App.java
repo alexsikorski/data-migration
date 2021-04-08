@@ -1,15 +1,11 @@
 package com.sparta.alex.view;
 
-import com.sparta.alex.controller.ReadCsv;
+import com.sparta.alex.controller.EmployeeDTO;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
-        ReadCsv.readCsvFile();
+        System.out.println(new EmployeeDTO().connectToDatabase());
     }
 }

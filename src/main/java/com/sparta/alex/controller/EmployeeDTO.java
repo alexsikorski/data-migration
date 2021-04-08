@@ -5,15 +5,22 @@ import com.sparta.alex.model.Employee;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Properties;
 
-public class ReadCsv {
+public class EmployeeDTO implements DTO {
 
     private static final String filePath = "resources/employees.csv";
+    private static final Properties properties = new Properties();
     static HashMap<Integer, Employee> employees = new HashMap<>();
     static HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
+    private Connection connection;
 
-    public static void readCsvFile() {
+    @Override
+    public void encapsulateData() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean firstLine = true;
@@ -37,4 +44,25 @@ public class ReadCsv {
         }
     }
 
+    @Override
+    public Connection connectToDatabase() {
+        try {
+            properties.load(new FileReader("resources/login.properties"));
+            String URL = "jdbc:mysql://localhost:3306/myLocalDb";
+            connection = DriverManager.getConnection(URL, properties.getProperty("username"), properties.getProperty("password"));
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+        }
+        return connection;
+    }
+
+    @Override
+    public void createTable() {
+
+    }
+
+    @Override
+    public void insertEntries() {
+
+    }
 }

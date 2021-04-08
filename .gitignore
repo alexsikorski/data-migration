@@ -1,6 +1,7 @@
 data-migration.iml
 /.idea
 /target
+/resources/login.properties
 
 # Compiled class file
 *.class

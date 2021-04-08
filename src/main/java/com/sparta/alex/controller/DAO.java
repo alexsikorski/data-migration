@@ -2,7 +2,7 @@ package com.sparta.alex.controller;
 
 import java.sql.Connection;
 
-public interface Dao {
+public interface DAO {
 
     Connection connectToDatabase();
 
