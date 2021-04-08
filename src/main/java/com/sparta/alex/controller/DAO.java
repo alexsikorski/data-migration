@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public interface DAO {
-    void encapsulateData();
-
     Connection connectToDatabase();
 
     void createTable();

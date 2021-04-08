@@ -2,54 +2,21 @@ package com.sparta.alex.controller;
 
 import com.sparta.alex.model.Employee;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 public class EmployeeDAO implements DAO {
 
-    private static final String FILE_PATH = "resources/employees.csv";
     private static final Properties PROPERTIES = new Properties();
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     String insertEntry = "INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    public final HashMap<Integer, Employee> employees = new HashMap<>();
-    public final HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
     private Connection connection;
-
-    @Override
-    public void encapsulateData() {
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-
-            boolean firstLine = true;
-
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                // first line contains column names so we ignore it
-                if (!firstLine) {
-                    // obtained lines, now to encapsulate data and populate hashmap
-                    if (employees.containsKey(Integer.parseInt(values[0]))) {
-                        // if employee already exists, add to toBeReviewedEmployees
-                        toBeReviewedEmployees.put(Integer.parseInt(values[0]), new Employee(values[1], values[2], values[3].charAt(0), values[4], values[5].charAt(0), values[6], dateFormat.parse(values[7]), dateFormat.parse(values[8]), Integer.parseInt(values[9])));
-                    } else {
-                        employees.put(Integer.parseInt(values[0]), new Employee(values[1], values[2], values[3].charAt(0), values[4], values[5].charAt(0), values[6], dateFormat.parse(values[7]), dateFormat.parse(values[8]), Integer.parseInt(values[9])));
-                    }
-                }
-                firstLine = false;
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public Connection connectToDatabase() {
@@ -109,7 +76,7 @@ public class EmployeeDAO implements DAO {
     @Override
     public void insertEntires(HashMap<Integer, Employee> employeeHashMap) throws SQLException {
         PreparedStatement preparedStatement = connectToDatabase().prepareStatement(insertEntry);
-        for (Map.Entry<Integer, Employee> entry : employees.entrySet()) {
+        for (Map.Entry<Integer, Employee> entry : employeeHashMap.entrySet()) {
             insertEntry(entry.getKey(), entry.getValue(), preparedStatement);
         }
     }
