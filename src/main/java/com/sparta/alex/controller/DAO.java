@@ -15,4 +15,6 @@ public interface DAO {
     void insertEntry(Integer employeeId, Employee employee, PreparedStatement preparedStatement);
 
     void insertEntires(HashMap<Integer, Employee> employeeHashMap) throws SQLException;
+
+    void truncateData(String tableName) throws SQLException;
 }

@@ -30,6 +30,7 @@ public class EmployeeDAO implements DAO {
         return connection;
     }
 
+
     @Override
     public void createTable() {
         String createTableQuery = "CREATE TABLE employees ("
@@ -79,6 +80,16 @@ public class EmployeeDAO implements DAO {
         PreparedStatement preparedStatement = connectToDatabase().prepareStatement(insertEntry);
         for (Map.Entry<Integer, Employee> entry : employeeHashMap.entrySet()) {
             insertEntry(entry.getKey(), entry.getValue(), preparedStatement);
+        }
+    }
+
+    @Override
+    public void truncateData(String tableName) {
+        try {
+            PreparedStatement preparedStatement = connectToDatabase().prepareStatement("TRUNCATE " + tableName + ";");
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

@@ -5,13 +5,13 @@ import com.sparta.alex.model.Employee;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class EmployeeDAORunnable implements Runnable {
+public class InsertTask implements Runnable {
 
-    EmployeeDAO employeeDAO;
     public final HashMap<Integer, Employee> splitHashMap;
+    EmployeeDAO employeeDAO;
 
-    public EmployeeDAORunnable(HashMap<Integer, Employee> splitHashMap) {
-        this.splitHashMap = new HashMap<Integer, Employee>(splitHashMap);
+    public InsertTask(HashMap<Integer, Employee> splitHashMap) {
+        this.splitHashMap = new HashMap<>(splitHashMap);
     }
 
     @Override
