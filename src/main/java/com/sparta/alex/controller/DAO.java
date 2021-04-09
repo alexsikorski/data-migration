@@ -10,11 +10,13 @@ import java.util.HashMap;
 public interface DAO {
     Connection connectToDatabase();
 
-    void createTable();
+    void createTable() throws SQLException;
 
     void insertEntry(Integer employeeId, Employee employee, PreparedStatement preparedStatement);
 
     void insertEntries(HashMap<Integer, Employee> employeeHashMap) throws SQLException;
 
     void truncateData(String tableName) throws SQLException;
+
+    int getTableCount(String tableName) throws SQLException;
 }

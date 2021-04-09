@@ -4,10 +4,7 @@ import com.sparta.alex.model.Employee;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -32,7 +29,7 @@ public class EmployeeDAO implements DAO {
 
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException {
         String createTableQuery = "CREATE TABLE employees ("
                 + "employee_id INT NOT NULL,"
                 + "prefix VARCHAR(5),"
@@ -52,6 +49,8 @@ public class EmployeeDAO implements DAO {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            connectToDatabase().close();
         }
     }
 
@@ -81,15 +80,33 @@ public class EmployeeDAO implements DAO {
         for (Map.Entry<Integer, Employee> entry : employeeHashMap.entrySet()) {
             insertEntry(entry.getKey(), entry.getValue(), preparedStatement);
         }
+        connectToDatabase().close();
     }
 
     @Override
-    public void truncateData(String tableName) {
+    public void truncateData(String tableName) throws SQLException {
         try {
             PreparedStatement preparedStatement = connectToDatabase().prepareStatement("TRUNCATE " + tableName + ";");
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            connectToDatabase().close();
         }
+    }
+
+    @Override
+    public int getTableCount(String tableName) throws SQLException {
+        try {
+            Statement statement = connectToDatabase().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM " + tableName + ";");
+            rs.next();
+            return rs.getInt("COUNT(*)");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            connectToDatabase().close();
+        }
+        return 0;
     }
 }
