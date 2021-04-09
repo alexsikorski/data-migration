@@ -16,10 +16,10 @@ public class EmployeeDAO implements DAO {
 
     private static final Properties PROPERTIES = new Properties();
     String insertEntry = "INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    private Connection connection;
 
     @Override
     public Connection connectToDatabase() {
+        Connection connection = null;
         try {
             PROPERTIES.load(new FileReader("resources/login.properties"));
             String URL = "jdbc:mysql://localhost:3306/myLocalDb";
@@ -57,7 +57,6 @@ public class EmployeeDAO implements DAO {
     @Override
     public void insertEntry(Integer employeeId, Employee employee, PreparedStatement preparedStatement) {
         try {
-
             preparedStatement.setInt(1, employeeId);
             preparedStatement.setString(2, employee.getPrefix());
             preparedStatement.setString(3, employee.getFirstName());
