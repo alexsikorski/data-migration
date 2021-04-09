@@ -13,8 +13,8 @@ public class Reader {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private final String filePath = "resources/employees.csv";
 
-    private HashMap<Integer, Employee> employees = new HashMap<>();
-    private HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
+    private final HashMap<Integer, Employee> employees = new HashMap<>();
+    private final HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
 
     public Reader() {
         encapsulateData();

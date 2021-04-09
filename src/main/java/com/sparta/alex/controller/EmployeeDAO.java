@@ -57,6 +57,7 @@ public class EmployeeDAO implements DAO {
     @Override
     public void insertEntry(Integer employeeId, Employee employee, PreparedStatement preparedStatement) {
         try {
+
             preparedStatement.setInt(1, employeeId);
             preparedStatement.setString(2, employee.getPrefix());
             preparedStatement.setString(3, employee.getFirstName());
@@ -68,6 +69,7 @@ public class EmployeeDAO implements DAO {
             preparedStatement.setDate(9, new java.sql.Date(employee.getJoinDate().getTime()));
             preparedStatement.setInt(10, employee.getSalary());
             preparedStatement.executeUpdate();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
