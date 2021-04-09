@@ -19,7 +19,7 @@ public class InsertTask implements Runnable {
         employeeDAO = new EmployeeDAO();
 
         try {
-            employeeDAO.insertEntires(splitHashMap);
+            employeeDAO.insertEntries(splitHashMap);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

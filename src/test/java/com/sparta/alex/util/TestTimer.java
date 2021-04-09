@@ -1,4 +1,4 @@
-package com.sparta.alex.controller;
+package com.sparta.alex.util;
 
 public class TestTimer {
     private long start;

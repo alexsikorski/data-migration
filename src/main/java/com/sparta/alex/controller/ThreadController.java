@@ -11,7 +11,7 @@ public class ThreadController {
     public void insertSingleThread(HashMap<Integer, Employee> employees) {
         EmployeeDAO employeeDTO = new EmployeeDAO();
         try {
-            employeeDTO.insertEntires(employees);
+            employeeDTO.insertEntries(employees);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

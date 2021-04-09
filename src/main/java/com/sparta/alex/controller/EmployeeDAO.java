@@ -61,7 +61,7 @@ public class EmployeeDAO implements DAO {
             preparedStatement.setInt(1, employeeId);
             preparedStatement.setString(2, employee.getPrefix());
             preparedStatement.setString(3, employee.getFirstName());
-            preparedStatement.setString(4, Character.toString(employee.getMiddleIntial()));
+            preparedStatement.setString(4, Character.toString(employee.getMiddleInitial()));
             preparedStatement.setString(5, employee.getLastName());
             preparedStatement.setString(6, Character.toString(employee.getGender()));
             preparedStatement.setString(7, employee.getEmail());
@@ -76,7 +76,7 @@ public class EmployeeDAO implements DAO {
     }
 
     @Override
-    public void insertEntires(HashMap<Integer, Employee> employeeHashMap) throws SQLException {
+    public void insertEntries(HashMap<Integer, Employee> employeeHashMap) throws SQLException {
         PreparedStatement preparedStatement = connectToDatabase().prepareStatement(insertEntry);
         for (Map.Entry<Integer, Employee> entry : employeeHashMap.entrySet()) {
             insertEntry(entry.getKey(), entry.getValue(), preparedStatement);

@@ -11,7 +11,6 @@ import java.util.HashMap;
 public class Reader {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    private final String filePath = "resources/employees.csv";
 
     private final HashMap<Integer, Employee> employees = new HashMap<>();
     private final HashMap<Integer, Employee> toBeReviewedEmployees = new HashMap<>();
@@ -21,6 +20,7 @@ public class Reader {
     }
 
     private void encapsulateData() {
+        String filePath = "resources/employees.csv";
         try (BufferedReader br = new BufferedReader(new java.io.FileReader(filePath))) {
             String line;
 
