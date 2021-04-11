@@ -56,7 +56,7 @@ Multi Thread (100 + 1): 2.332285s.
 
 #### Why do most threads include an additional thread?
 
-This algorithm essentially divides the hashmap into x batches. This means that unless x is a factor of the size(entries count), there will always be a remainder of entries not covered. This algorithm generates threads for those batches so when there are some remainder entries, a final thread is crated.
+This algorithm essentially divides the hashmap into x batches. This means that unless x is a factor of the size(entries count), there will always be a remainder of entries not covered. This algorithm generates threads for those batches so when there are some remainder entries, a final thread is created.
 
 When the developer specifies that he/she wants 61 threads, an additional thread is not generated because 61 is a factor of the size (9943). This means batches are evenly distributed.
 
