@@ -29,7 +29,7 @@ public class EmployeeDAO implements DAO {
 
 
     @Override
-    public void createTable() throws SQLException {
+    public void createEmployeesTable() throws SQLException {
         String createTableQuery = "CREATE TABLE employees ("
                 + "employee_id INT NOT NULL,"
                 + "prefix VARCHAR(5),"

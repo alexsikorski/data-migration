@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class performanceTests {
+public class insertionPerformanceTests {
 
     private static final int SMALL = 5;
     private static final int MEDIUM = 15;
@@ -68,6 +68,7 @@ public class performanceTests {
             }
         }
         assertEquals(9943, reader.getEmployees().size());
+        assertEquals(9943, employeeDAO.getTableCount("employees"));
         resultSingle = "Single Thread: " + timeTaken + "s.";
     }
 
@@ -84,6 +85,7 @@ public class performanceTests {
             }
         }
         assertEquals(9943, reader.getEmployees().size());
+        assertEquals(9943, employeeDAO.getTableCount("employees"));
         resultSmall = "Multi Thread (" + SMALL + " + 1): " + timeTaken + "s.";
     }
 
@@ -100,6 +102,7 @@ public class performanceTests {
             }
         }
         assertEquals(9943, reader.getEmployees().size());
+        assertEquals(9943, employeeDAO.getTableCount("employees"));
         resultMedium = "Multi Thread (" + MEDIUM + " + 1): " + timeTaken + "s.";
     }
 
@@ -116,6 +119,7 @@ public class performanceTests {
             }
         }
         assertEquals(9943, reader.getEmployees().size());
+        assertEquals(9943, employeeDAO.getTableCount("employees"));
         resultLarge = "Multi Thread (" + LARGE + " + 1): " + timeTaken + "s.";
     }
 
@@ -132,6 +136,7 @@ public class performanceTests {
             }
         }
         assertEquals(9943, reader.getEmployees().size());
+        assertEquals(9943, employeeDAO.getTableCount("employees"));
         resultFactor = "Multi Thread (" + FACTOR + "): " + timeTaken + "s.";
     }
 
@@ -148,6 +153,7 @@ public class performanceTests {
             }
         }
         assertEquals(9943, reader.getEmployees().size());
+        assertEquals(9943, employeeDAO.getTableCount("employees"));
         resultXLarge = "Multi Thread (" + XLARGE + " + 1): " + timeTaken + "s.";
     }
 }

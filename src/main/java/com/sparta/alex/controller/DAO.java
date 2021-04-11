@@ -10,7 +10,7 @@ import java.util.HashMap;
 public interface DAO {
     Connection connectToDatabase();
 
-    void createTable() throws SQLException;
+    void createEmployeesTable() throws SQLException;
 
     void insertEntry(Integer employeeId, Employee employee, PreparedStatement preparedStatement);
 
