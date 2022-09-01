@@ -62,6 +62,6 @@ When the developer specifies that he/she wants **61 threads**, an additional thr
 
 #### What happens to duplicate entries?
 
-This algorithm always keeps the first HashMap entry when a duplicate is found, it is then placed in a separate HashMap. This HashMap currently has no functionality, but it's size is used for testing purposes. Further development can for example, export this HashMap as a CSV or text file for administration purposes.
+This algorithm always keeps the first HashMap entry when a duplicate is found, it is then placed in a separate `HashMap`. This `HashMap` currently has no functionality, but its size is used for testing purposes. Further development can for example, export this `HashMap` as a **CSV** or **text file** for administrative purposes.
 
 ###### Authored by Alex Sikorski
